@@ -11,13 +11,7 @@ import org.mapstruct.Mapping;
 public interface PatientMapper {
 
     PatientDTO patientToPatientDTO(Patient entity);
-
-
     Patient patientDTOToPatient(PatientDTO dto);
-
-
     Patient patientCreateDTOToPatient(PatientCreateDTO dto);
-
     Patient patientToPatient(Patient patient);
-
 }

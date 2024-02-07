@@ -14,5 +14,4 @@ public class PatientDTO {
     private String email;
     private String phoneNumber;
     private LocalDate birthday;
-
 }

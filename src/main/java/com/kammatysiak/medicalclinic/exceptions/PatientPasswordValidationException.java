@@ -1,9 +1,14 @@
 package com.kammatysiak.medicalclinic.exceptions;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
-@Getter
-public class PatientPasswordValidationException extends RuntimeException {
 
-    private final HttpStatus status = HttpStatus.PRECONDITION_FAILED;
+@Getter
+@Setter
+public class PatientPasswordValidationException extends MedicalClinicException {
+    public PatientPasswordValidationException(String message, HttpStatus status) {
+        super(message, status);
+    }
 }

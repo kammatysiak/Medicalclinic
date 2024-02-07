@@ -1,9 +1,12 @@
 package com.kammatysiak.medicalclinic.exceptions;
 
-import lombok.Getter;
+import lombok.*;
 import org.springframework.http.HttpStatus;
-@Getter
-public class PatientDoesNotExistException extends RuntimeException{
 
-    private final HttpStatus status = HttpStatus.NOT_FOUND;
+@Getter
+@Setter
+public class PatientDoesNotExistException extends MedicalClinicException{
+    public PatientDoesNotExistException(String message, HttpStatus status) {
+        super(message, status);
+    }
 }

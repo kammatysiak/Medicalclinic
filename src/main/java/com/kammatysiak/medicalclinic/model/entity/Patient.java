@@ -1,9 +1,6 @@
 package com.kammatysiak.medicalclinic.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,7 +12,9 @@ import java.time.LocalDateTime;
 @Table(name = "PATIENTS")
 @Entity
 public class Patient {
+
     @Id
+    @Column(name = "email")
     private String email;
     @Column(name = "FIRST_NAME")
     private String firstName;

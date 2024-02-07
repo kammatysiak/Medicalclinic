@@ -17,7 +17,7 @@ import java.util.List;
 public class PatientController {
 
     private final PatientService patientService;
-//w controllerze definiujemy endpointy (punkty komunikacji) a serwis ma dostarczyc wlasciwe dane do kontrolera
+
 
     @GetMapping
     public List<PatientDTO> getPatients() {
@@ -25,7 +25,7 @@ public class PatientController {
     }
 
     @GetMapping("/{email}")
-    public PatientDTO getPatient(@PathVariable String email) {
+    public PatientDTO getPatient(@PathVariable("email") String email) {
         return patientService.getPatient(email);
     }
 
@@ -36,18 +36,16 @@ public class PatientController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{email}")
-    public void deletePatient(@PathVariable String email) {
+    public void deletePatient(@PathVariable("email") String email) {
         patientService.deletePatient(email);
     }
 
     @PutMapping("/{email}")
-    public PatientDTO editPatient(@PathVariable String email, @RequestBody PatientDTO patientDTO) {
+    public PatientDTO editPatient(@PathVariable("email") String email, @RequestBody PatientDTO patientDTO) {
        return patientService.editPatient(email, patientDTO);
     }
     @PatchMapping("/{email}")
-    public PatientDTO editPatientPassword(@PathVariable String email, @RequestBody PasswordClassDTO passwordsDTO) {
+    public PatientDTO editPatientPassword(@PathVariable("email") String email, @RequestBody PasswordClassDTO passwordsDTO) {
         return patientService.editPatientPassword(email, passwordsDTO);
     }
-
-
 }

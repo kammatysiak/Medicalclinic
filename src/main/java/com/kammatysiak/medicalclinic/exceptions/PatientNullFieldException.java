@@ -1,11 +1,15 @@
 package com.kammatysiak.medicalclinic.exceptions;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class PatientNullFieldException extends RuntimeException{
-
-    private final HttpStatus status = HttpStatus.BAD_REQUEST;
+@Setter
+public class PatientNullFieldException extends MedicalClinicException {
+    public PatientNullFieldException(String message, HttpStatus status) {
+        super(message, status);
+    }
 }

@@ -17,6 +17,4 @@ public class PatientCreateDTO {
     private String idCardNo;
     private String phoneNumber;
     private LocalDate birthday;
-
-
 }
