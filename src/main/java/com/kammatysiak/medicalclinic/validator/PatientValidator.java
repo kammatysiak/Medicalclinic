@@ -7,13 +7,11 @@ import com.kammatysiak.medicalclinic.exceptions.PatientPasswordValidationExcepti
 import com.kammatysiak.medicalclinic.model.dto.PasswordClassDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
-import com.kammatysiak.medicalclinic.repository.PatientRepository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
-import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PatientValidator {
@@ -45,7 +43,7 @@ public final class PatientValidator {
         }
     }
 
-    public static void validateIfPatientAlreadyExists(boolean exists, String message){
+    public static void validateIfPatientAlreadyExists(boolean exists, String message) {
         if (exists) {
             throw new PatientExistsException(message, HttpStatus.CONFLICT);
         }

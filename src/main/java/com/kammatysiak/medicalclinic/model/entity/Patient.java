@@ -1,7 +1,12 @@
 package com.kammatysiak.medicalclinic.model.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +19,7 @@ import java.time.LocalDateTime;
 public class Patient {
 
     @Id
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     private String email;
     @Column(name = "FIRST_NAME")
     private String firstName;
@@ -30,5 +35,4 @@ public class Patient {
     private LocalDate birthday;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
-
 }

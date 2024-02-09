@@ -1,6 +1,5 @@
 package com.kammatysiak.medicalclinic.model.dto;
 
-import com.kammatysiak.medicalclinic.model.entity.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
