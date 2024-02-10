@@ -4,7 +4,7 @@ import com.kammatysiak.medicalclinic.exceptions.PatientDoesNotExistException;
 import com.kammatysiak.medicalclinic.exceptions.PatientExistsException;
 import com.kammatysiak.medicalclinic.exceptions.PatientNullFieldException;
 import com.kammatysiak.medicalclinic.exceptions.PatientPasswordValidationException;
-import com.kammatysiak.medicalclinic.model.dto.PasswordClassDTO;
+import com.kammatysiak.medicalclinic.model.dto.PasswordDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
 import lombok.AccessLevel;
@@ -24,9 +24,9 @@ public final class PatientValidator {
         }
     }
 
-    public static void validatePasswordChange(PasswordClassDTO passwords, Patient patient, String message) {
+    public static void validatePasswordChange(PasswordDTO passwords, Patient patient, String message) {
         if (!patient.getPassword().equals(passwords.getOldPassword())) {
-            throw new PatientPasswordValidationException(message, HttpStatus.PRECONDITION_FAILED);
+            throw new PatientPasswordValidationException(message, HttpStatus.BAD_REQUEST);
         }
     }
 

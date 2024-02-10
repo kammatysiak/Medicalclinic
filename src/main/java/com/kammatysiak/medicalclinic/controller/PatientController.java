@@ -1,6 +1,6 @@
 package com.kammatysiak.medicalclinic.controller;
 
-import com.kammatysiak.medicalclinic.model.dto.PasswordClassDTO;
+import com.kammatysiak.medicalclinic.model.dto.PasswordDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientCreateDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import com.kammatysiak.medicalclinic.service.PatientService;
@@ -45,7 +45,7 @@ public class PatientController {
     }
 
     @PatchMapping("/{email}")
-    public PatientDTO editPatientPassword(@PathVariable("email") String email, @RequestBody PasswordClassDTO passwordsDTO) {
+    public PatientDTO editPatientPassword(@PathVariable("email") String email, @RequestBody PasswordDTO passwordsDTO) {
         return patientService.editPatientPassword(email, passwordsDTO);
     }
 }

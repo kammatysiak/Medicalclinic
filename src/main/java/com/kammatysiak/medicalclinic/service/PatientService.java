@@ -2,7 +2,7 @@ package com.kammatysiak.medicalclinic.service;
 
 import com.kammatysiak.medicalclinic.exceptions.PatientDoesNotExistException;
 import com.kammatysiak.medicalclinic.mapper.PatientMapper;
-import com.kammatysiak.medicalclinic.model.dto.PasswordClassDTO;
+import com.kammatysiak.medicalclinic.model.dto.PasswordDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientCreateDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.kammatysiak.medicalclinic.validator.PatientValidator.*;
 
@@ -27,7 +26,7 @@ public class PatientService {
     public List<PatientDTO> getPatients() {
         return patientRepository.findAll().stream()
                 .map(patientMapper::patientToPatientDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public PatientDTO getPatient(String email) {
@@ -59,7 +58,7 @@ public class PatientService {
         return patientMapper.patientToPatientDTO(patientRepository.save(patientUpdate));
     }
 
-    public PatientDTO editPatientPassword(String email, PasswordClassDTO passwordsDTO) {
+    public PatientDTO editPatientPassword(String email, PasswordDTO passwordsDTO) {
         Patient patient = patientRepository.findById(email)
                 .orElseThrow(() -> new PatientDoesNotExistException("The patient whom you are trying to change the password does not exist.", HttpStatus.NOT_FOUND));
         validatePasswordChange(passwordsDTO, patient, "Incorrect password.");
