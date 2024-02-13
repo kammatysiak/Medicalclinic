@@ -71,7 +71,6 @@ public class PatientService {
         return patientMapper.patientToPatientDTO(patientRepository.save(patient));
     }
 
-
     private void isEmailAvailable(String currentEmail, String newEmail) {
         if (!newEmail.equals(currentEmail)) {
             if (patientRepository.existsByEmail(newEmail)) {
