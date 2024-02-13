@@ -5,15 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "PATIENTS")
+@Table(name = "DOCTORS")
 @Entity
-public class Patient {
+public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,14 +24,16 @@ public class Patient {
     private String firstName;
     @Column(name = "LAST_NAME")
     private String lastName;
-    @Column(name = "PASSWORD")
-    private String password;
-    @Column(name = "ID_CARD_NO")
-    private String idCardNo;
-    @Column(name = "PHONE_NUMBER")
-    private String phoneNumber;
-    @Column(name = "BIRTHDAY")
-    private LocalDate birthday;
+    @Column(name = "SPECIALIZATION")
+    private String specialization;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
+
+    @ManyToMany
+    @JoinTable(
+            name = "DoctorEmploymentInClinics",
+            joinColumns = @JoinColumn(name = "doctor_id"),
+            inverseJoinColumns = @JoinColumn(name = "clinic_id"))
+    Set<Clinic> employmentsInClinics;
+
 }
