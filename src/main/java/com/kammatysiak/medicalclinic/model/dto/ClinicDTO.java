@@ -7,12 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ClinicDTO {
     private String name;
-
     private String city;
-
     private String postCode;
-
     private String street;
-
     private String buildingNumber;
 }

@@ -21,13 +21,12 @@ public class Clinic {
     private String name;
     @Column(name = "CITY")
     private String city;
-    @Column(name = "POSTCODE")
+    @Column(name = "POST_CODE")
     private String postCode;
     @Column(name = "STREET")
     private String street;
-    @Column(name = "BUILDINGNUMBER")
+    @Column(name = "BUILDING_NUMBER")
     private String buildingNumber;
-
-    @ManyToMany(mappedBy = "employmentsInClinics")
-    Set<Doctor> doctorsInClinic;
+    @ManyToMany(mappedBy = "clinics")
+    private Set<Doctor> doctors;
 }

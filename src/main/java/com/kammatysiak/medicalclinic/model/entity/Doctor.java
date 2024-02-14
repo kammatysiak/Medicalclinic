@@ -26,14 +26,16 @@ public class Doctor {
     private String lastName;
     @Column(name = "SPECIALIZATION")
     private String specialization;
+    @Column(name = "PASSWORD")
+    private String password;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
 
     @ManyToMany
     @JoinTable(
-            name = "DoctorEmploymentInClinics",
+            name = "DOCTOR_CLINIC",
             joinColumns = @JoinColumn(name = "doctor_id"),
             inverseJoinColumns = @JoinColumn(name = "clinic_id"))
-    Set<Clinic> employmentsInClinics;
+    private Set<Clinic> clinics;
 
 }

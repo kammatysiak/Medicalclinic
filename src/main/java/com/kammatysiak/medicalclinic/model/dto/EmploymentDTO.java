@@ -8,5 +8,5 @@ import lombok.Data;
 public class EmploymentDTO {
 
     private String doctorEmail;
-    private String clinicName;
+    private String name;
 }

@@ -10,9 +10,8 @@ import java.util.stream.Stream;
 
 public class DoctorValidator {
 
-
     public static void validateNullsDoctor(Doctor doctor, String message) {
-        if (Stream.of(doctor.getEmail(), doctor.getFirstName(), doctor.getLastName(), doctor.getSpecialization())
+        if (Stream.of(doctor.getEmail(), doctor.getFirstName(), doctor.getLastName(), doctor.getSpecialization(), doctor.getPassword())
                 .anyMatch(Objects::isNull)) {
             throw new DoctorNullFieldException(message, HttpStatus.BAD_REQUEST);
         }

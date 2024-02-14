@@ -1,5 +1,6 @@
 package com.kammatysiak.medicalclinic.controller;
 
+import com.kammatysiak.medicalclinic.model.dto.DoctorCreateDTO;
 import com.kammatysiak.medicalclinic.model.dto.DoctorDTO;
 import com.kammatysiak.medicalclinic.model.dto.EmploymentDTO;
 import com.kammatysiak.medicalclinic.service.DoctorService;
@@ -27,8 +28,8 @@ public class DoctorController {
     }
 
     @PostMapping
-    public DoctorDTO postDoctor(@RequestBody DoctorDTO doctorDTO) {
-        return doctorService.createDoctor(doctorDTO);
+    public DoctorDTO postDoctor(@RequestBody DoctorCreateDTO doctorCreateDTO) {
+        return doctorService.createDoctor(doctorCreateDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -38,7 +39,7 @@ public class DoctorController {
     }
 
     @PutMapping("/{email}")
-    public DoctorDTO employDoctorInClinic(@PathVariable("email") String email, @RequestBody EmploymentDTO employmentDTO) {
+    public DoctorDTO assignDoctorToClinic(@PathVariable("email") String email, @RequestBody EmploymentDTO employmentDTO) {
         return doctorService.employDoctorInClinic(email, employmentDTO);
     }
 }

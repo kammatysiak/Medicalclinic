@@ -1,10 +1,6 @@
 package com.kammatysiak.medicalclinic.handler;
 
 import com.kammatysiak.medicalclinic.exceptions.*;
-import com.kammatysiak.medicalclinic.exceptions.PatientDoesNotExistException;
-import com.kammatysiak.medicalclinic.exceptions.PatientExistsException;
-import com.kammatysiak.medicalclinic.exceptions.PatientNullFieldException;
-import com.kammatysiak.medicalclinic.exceptions.PatientPasswordValidationException;
 import com.kammatysiak.medicalclinic.model.dto.ExceptionMessageDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

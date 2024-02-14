@@ -26,7 +26,7 @@ public class ClinicController {
     }
 
     @PostMapping
-    public ClinicDTO postClinic(@RequestBody ClinicDTO clinicDTO) {
+    public ClinicDTO createClinic(@RequestBody ClinicDTO clinicDTO) {
         return clinicService.createClinic(clinicDTO);
     }
 

@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ClinicMapper {
 
-    ClinicDTO clinicToClinicDTO(Clinic entity);
+    ClinicDTO ToClinicDTO(Clinic entity);
 
-    Clinic clinicDTOToClinic(ClinicDTO entity);
+    Clinic ToClinic(ClinicDTO entity);
 }

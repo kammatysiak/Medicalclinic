@@ -1,5 +1,6 @@
 package com.kammatysiak.medicalclinic.model.entity;
 
+import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,4 +35,12 @@ public class Patient {
     private LocalDate birthday;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
+
+    public static void setPatientData(Patient patient, PatientDTO newPatientData) {
+        patient.setFirstName(newPatientData.getFirstName());
+        patient.setBirthday(newPatientData.getBirthday());
+        patient.setLastName(newPatientData.getLastName());
+        patient.setPhoneNumber(newPatientData.getPhoneNumber());
+        patient.setEmail(newPatientData.getEmail());
+    }
 }

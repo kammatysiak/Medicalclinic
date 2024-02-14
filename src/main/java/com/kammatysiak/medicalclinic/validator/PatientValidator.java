@@ -46,6 +46,5 @@ public final class PatientValidator {
             throw new PatientExistsException(message, HttpStatus.CONFLICT);
         }
     }
-
 }
 
