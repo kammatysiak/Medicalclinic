@@ -27,8 +27,8 @@ public class ClinicService {
                 .toList();
     }
 
-    public ClinicDTO getClinic(String name) {
-        Clinic clinic = clinicRepository.findByName(name)
+    public ClinicDTO getClinic(long id) {
+        Clinic clinic = clinicRepository.findById(id)
                 .orElseThrow(() -> new ClinicDoesNotExistException("Clinic with given name does not exist.", HttpStatus.NOT_FOUND));
         return clinicMapper.ToClinicDTO(clinic);
     }

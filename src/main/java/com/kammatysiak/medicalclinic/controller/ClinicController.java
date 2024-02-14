@@ -20,9 +20,9 @@ public class ClinicController {
         return clinicService.getClinics();
     }
 
-    @GetMapping("/{name}")
-    public ClinicDTO getClinic(@PathVariable("name") String name) {
-        return clinicService.getClinic(name);
+    @GetMapping("/{id}")
+    public ClinicDTO getClinic(@PathVariable("id") long id) {
+        return clinicService.getClinic(id);
     }
 
     @PostMapping
