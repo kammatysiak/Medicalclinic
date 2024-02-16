@@ -2,15 +2,18 @@ package com.kammatysiak.medicalclinic.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "DOCTORS")
 @Entity
 public class Doctor {
@@ -36,6 +39,34 @@ public class Doctor {
             name = "DOCTOR_CLINIC",
             joinColumns = @JoinColumn(name = "doctor_id"),
             inverseJoinColumns = @JoinColumn(name = "clinic_id"))
-    private Set<Clinic> clinics;
+    private Set<Clinic> clinics = new HashSet<>();
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Doctor doctor = (Doctor) o;
+        return id != null && id.equals(doctor.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", specialization='" + specialization + '\'' +
+                ", password='" + password + '\'' +
+                ", modifyDate=" + modifyDate +
+                ", clinics=" + getClinics().stream()
+                .map(Clinic::getId).toList().toString() +
+                '}';
+    }
 }
