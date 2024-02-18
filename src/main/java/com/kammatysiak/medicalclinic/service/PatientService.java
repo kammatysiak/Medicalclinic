@@ -8,6 +8,7 @@ import com.kammatysiak.medicalclinic.model.dto.PatientCreateDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
 import com.kammatysiak.medicalclinic.repository.PatientRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class PatientService {
                 .orElseThrow(() -> new PatientDoesNotExistException("Patient with given e-mail does not exist.", HttpStatus.NOT_FOUND));
         return patientMapper.PatientDTO(patient);
     }
-
+    @Transactional
     public PatientDTO createPatient(PatientCreateDTO patientDTO) {
         validateNullsPatient(patientMapper.DTOToPatient(patientDTO), "Data you shared contains empty fields");
         validateIfPatientAlreadyExists(patientRepository.existsByEmail(patientDTO.getEmail()), "Patient with given e-mail already exists.");
@@ -49,7 +50,7 @@ public class PatientService {
                 .orElseThrow(() -> new PatientDoesNotExistException("The patient you are trying to delete does not exist", HttpStatus.NOT_FOUND));
         patientRepository.delete(patient);
     }
-
+    @Transactional
     public PatientDTO editPatient(String email, PatientDTO newPatientData) {
         validateNullsPatientDTO(newPatientData, "Provided patient contains empty fields.");
         Patient patient = patientRepository.findByEmail(email)
@@ -58,7 +59,7 @@ public class PatientService {
         setPatientData(patient, newPatientData);
         return patientMapper.PatientDTO(patientRepository.save(patient));
     }
-
+    @Transactional
     public PatientDTO editPatientPassword(String email, PasswordDTO passwordsDTO) {
         Patient patient = patientRepository.findByEmail(email)
                 .orElseThrow(() -> new PatientDoesNotExistException("The patient whom you are trying to change the password does not exist.", HttpStatus.NOT_FOUND));

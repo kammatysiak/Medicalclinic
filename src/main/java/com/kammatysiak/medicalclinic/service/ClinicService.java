@@ -5,6 +5,7 @@ import com.kammatysiak.medicalclinic.mapper.ClinicMapper;
 import com.kammatysiak.medicalclinic.model.dto.ClinicDTO;
 import com.kammatysiak.medicalclinic.model.entity.Clinic;
 import com.kammatysiak.medicalclinic.repository.ClinicRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class ClinicService {
         return clinicMapper.ToClinicDTO(clinic);
     }
 
+    @Transactional
     public ClinicDTO createClinic(ClinicDTO clinicDTO) {
         validateNullsClinic(clinicMapper.ToClinic(clinicDTO), "Data you shared contains empty fields");
         validateIfClinicAlreadyExists(clinicRepository.existsByName(clinicDTO.getName()), "Clinic with given name already exists.");

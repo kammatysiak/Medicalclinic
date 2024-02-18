@@ -10,6 +10,7 @@ import com.kammatysiak.medicalclinic.model.entity.Clinic;
 import com.kammatysiak.medicalclinic.model.entity.Doctor;
 import com.kammatysiak.medicalclinic.repository.ClinicRepository;
 import com.kammatysiak.medicalclinic.repository.DoctorRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class DoctorService {
                 .orElseThrow(() -> new DoctorDoesNotExistException("Doctor with given email does not exist.", HttpStatus.NOT_FOUND));
         return doctorMapper.ToDoctorDTO(doctor);
     }
-
+    @Transactional
     public DoctorDTO createDoctor(DoctorCreateDTO doctorCreateDTO) {
         validateNullsDoctor(doctorMapper.ToDoctor(doctorCreateDTO), "Data you shared contains empty fields");
         validateIfDoctorAlreadyExists(doctorRepository.existsByEmail(doctorCreateDTO.getEmail()), "Doctor with given email already exists.");
@@ -51,7 +52,7 @@ public class DoctorService {
                 .orElseThrow(() -> new DoctorDoesNotExistException("The doctor you are trying to delete does not exist", HttpStatus.NOT_FOUND));
         doctorRepository.delete(doctor);
     }
-
+    @Transactional
     public DoctorDTO employDoctorInClinic(String email, EmploymentDTO employmentDTO) {
         Doctor doctor = doctorRepository.findByEmail(email)
                 .orElseThrow(() -> new DoctorDoesNotExistException("The doctor you are trying to assign does not exist", HttpStatus.NOT_FOUND));
