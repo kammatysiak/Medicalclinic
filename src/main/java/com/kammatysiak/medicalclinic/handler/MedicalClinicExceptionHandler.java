@@ -1,9 +1,6 @@
 package com.kammatysiak.medicalclinic.handler;
 
-import com.kammatysiak.medicalclinic.exceptions.PatientDoesNotExistException;
-import com.kammatysiak.medicalclinic.exceptions.PatientExistsException;
-import com.kammatysiak.medicalclinic.exceptions.PatientNullFieldException;
-import com.kammatysiak.medicalclinic.exceptions.PatientPasswordValidationException;
+import com.kammatysiak.medicalclinic.exceptions.*;
 import com.kammatysiak.medicalclinic.model.dto.ExceptionMessageDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,4 +32,33 @@ public class MedicalClinicExceptionHandler extends ResponseEntityExceptionHandle
         return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
     }
 
+    @ExceptionHandler({ClinicDoesNotExistException.class})
+    public ResponseEntity<ExceptionMessageDTO> handleClinicDoesNotExistException(ClinicDoesNotExistException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
+    }
+
+    @ExceptionHandler({ClinicExistsException.class})
+    public ResponseEntity<ExceptionMessageDTO> handleClinicExistsException(ClinicExistsException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
+    }
+
+    @ExceptionHandler({ClinicNullFieldException.class})
+    public ResponseEntity<ExceptionMessageDTO> handleClinicNullFieldException(ClinicNullFieldException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
+    }
+
+    @ExceptionHandler({DoctorNullFieldException.class})
+    public ResponseEntity<ExceptionMessageDTO> handleDoctorNullFieldException(DoctorNullFieldException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
+    }
+
+    @ExceptionHandler({DoctorDoesNotExistException.class})
+    public ResponseEntity<ExceptionMessageDTO> handleDoctorDoesNotExistException(DoctorDoesNotExistException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
+    }
+
+    @ExceptionHandler({DoctorExistsException.class})
+    public ResponseEntity<ExceptionMessageDTO> handleDoctorExistsException(DoctorExistsException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
+    }
 }

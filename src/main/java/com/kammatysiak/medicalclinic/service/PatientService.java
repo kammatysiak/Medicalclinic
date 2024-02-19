@@ -1,18 +1,21 @@
 package com.kammatysiak.medicalclinic.service;
 
 import com.kammatysiak.medicalclinic.exceptions.PatientDoesNotExistException;
+import com.kammatysiak.medicalclinic.exceptions.PatientExistsException;
 import com.kammatysiak.medicalclinic.mapper.PatientMapper;
 import com.kammatysiak.medicalclinic.model.dto.PasswordDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientCreateDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
 import com.kammatysiak.medicalclinic.repository.PatientRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.kammatysiak.medicalclinic.model.entity.Patient.setPatientData;
 import static com.kammatysiak.medicalclinic.validator.PatientValidator.*;
 
 @RequiredArgsConstructor
@@ -25,44 +28,51 @@ public class PatientService {
 
     public List<PatientDTO> getPatients() {
         return patientRepository.findAll().stream()
-                .map(patientMapper::patientToPatientDTO)
+                .map(patientMapper::toPatientDTO)
                 .toList();
     }
 
     public PatientDTO getPatient(String email) {
-        Patient patient = patientRepository.findById(email)
+        Patient patient = patientRepository.findByEmail(email)
                 .orElseThrow(() -> new PatientDoesNotExistException("Patient with given e-mail does not exist.", HttpStatus.NOT_FOUND));
-        return patientMapper.patientToPatientDTO(patient);
+        return patientMapper.toPatientDTO(patient);
     }
-
+    @Transactional
     public PatientDTO createPatient(PatientCreateDTO patientDTO) {
-        validateNullsPatient(patientMapper.patientCreateDTOToPatient(patientDTO), "Data you shared contains empty fields");
-        validateIfPatientAlreadyExists(patientRepository.existsById(patientDTO.getEmail()), "Patient with given e-mail already exists.");
-        Patient patient = patientMapper.patientCreateDTOToPatient(patientDTO);
-        return patientMapper.patientToPatientDTO(patientRepository.save(patient));
+        validateNullsPatient(patientMapper.toPatient(patientDTO), "Data you shared contains empty fields");
+        validateIfPatientAlreadyExists(patientRepository.existsByEmail(patientDTO.getEmail()), "Patient with given e-mail already exists.");
+        Patient patient = patientMapper.toPatient(patientDTO);
+        return patientMapper.toPatientDTO(patientRepository.save(patient));
     }
 
     public void deletePatient(String email) {
-        validateIfPatientIsNull(patientRepository.existsById(email), "The patient you are trying to delete does not exist");
-        patientRepository.deleteById(email);
+        Patient patient = patientRepository.findByEmail(email)
+                .orElseThrow(() -> new PatientDoesNotExistException("The patient you are trying to delete does not exist", HttpStatus.NOT_FOUND));
+        patientRepository.delete(patient);
     }
-
+    @Transactional
     public PatientDTO editPatient(String email, PatientDTO newPatientData) {
         validateNullsPatientDTO(newPatientData, "Provided patient contains empty fields.");
-        Patient patient = patientRepository.findById(email)
+        Patient patient = patientRepository.findByEmail(email)
                 .orElseThrow(() -> new PatientDoesNotExistException("The patient you are trying to change does not exist.", HttpStatus.NOT_FOUND));
-        Patient patientUpdate = patientMapper.patientDTOToPatient(newPatientData);
-        patientUpdate.setIdCardNo(patient.getIdCardNo());
-        patientUpdate.setPassword(patient.getPassword());
-        patientUpdate.setModifyDate(patient.getModifyDate());
-        return patientMapper.patientToPatientDTO(patientRepository.save(patientUpdate));
+        isEmailAvailable(patient.getEmail(), newPatientData.getEmail());
+        setPatientData(patient, newPatientData);
+        return patientMapper.toPatientDTO(patientRepository.save(patient));
     }
-
+    @Transactional
     public PatientDTO editPatientPassword(String email, PasswordDTO passwordsDTO) {
-        Patient patient = patientRepository.findById(email)
+        Patient patient = patientRepository.findByEmail(email)
                 .orElseThrow(() -> new PatientDoesNotExistException("The patient whom you are trying to change the password does not exist.", HttpStatus.NOT_FOUND));
         validatePasswordChange(passwordsDTO, patient, "Incorrect password.");
         patient.setPassword(passwordsDTO.getNewPassword());
-        return patientMapper.patientToPatientDTO(patientRepository.save(patient));
+        return patientMapper.toPatientDTO(patientRepository.save(patient));
+    }
+
+    private void isEmailAvailable(String currentEmail, String newEmail) {
+        if (!newEmail.equals(currentEmail)) {
+            if (patientRepository.existsByEmail(newEmail)) {
+                throw new PatientExistsException("Email already exists for " + newEmail, HttpStatus.CONFLICT);
+            }
+        }
     }
 }

@@ -15,8 +15,6 @@ import java.util.Arrays;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PatientValidator {
-
-
     public static void validateNullsPatient(Patient patient, String message) {
         if (Arrays.asList(patient.getBirthday(), patient.getEmail(), patient.getFirstName(), patient.getLastName(),
                 patient.getIdCardNo(), patient.getPassword(), patient.getPhoneNumber()).contains(null)) {
@@ -48,6 +46,5 @@ public final class PatientValidator {
             throw new PatientExistsException(message, HttpStatus.CONFLICT);
         }
     }
-
 }
 

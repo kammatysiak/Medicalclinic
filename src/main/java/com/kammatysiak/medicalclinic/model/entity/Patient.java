@@ -1,9 +1,7 @@
 package com.kammatysiak.medicalclinic.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +17,8 @@ import java.time.LocalDateTime;
 public class Patient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "EMAIL")
     private String email;
     @Column(name = "FIRST_NAME")
@@ -35,4 +35,12 @@ public class Patient {
     private LocalDate birthday;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
+
+    public static void setPatientData(Patient patient, PatientDTO newPatientData) {
+        patient.setFirstName(newPatientData.getFirstName());
+        patient.setBirthday(newPatientData.getBirthday());
+        patient.setLastName(newPatientData.getLastName());
+        patient.setPhoneNumber(newPatientData.getPhoneNumber());
+        patient.setEmail(newPatientData.getEmail());
+    }
 }
