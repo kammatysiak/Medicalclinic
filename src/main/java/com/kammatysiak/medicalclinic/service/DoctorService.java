@@ -30,21 +30,21 @@ public class DoctorService {
 
     public List<DoctorDTO> getDoctors() {
         return doctorRepository.findAll().stream()
-                .map(doctorMapper::ToDoctorDTO)
+                .map(doctorMapper::toDoctorDTO)
                 .toList();
     }
 
     public DoctorDTO getDoctor(String email) {
         Doctor doctor = doctorRepository.findByEmail(email)
                 .orElseThrow(() -> new DoctorDoesNotExistException("Doctor with given email does not exist.", HttpStatus.NOT_FOUND));
-        return doctorMapper.ToDoctorDTO(doctor);
+        return doctorMapper.toDoctorDTO(doctor);
     }
     @Transactional
     public DoctorDTO createDoctor(DoctorCreateDTO doctorCreateDTO) {
-        validateNullsDoctor(doctorMapper.ToDoctor(doctorCreateDTO), "Data you shared contains empty fields");
+        validateNullsDoctor(doctorMapper.todoctor(doctorCreateDTO), "Data you shared contains empty fields");
         validateIfDoctorAlreadyExists(doctorRepository.existsByEmail(doctorCreateDTO.getEmail()), "Doctor with given email already exists.");
-        Doctor doctor = doctorMapper.ToDoctor(doctorCreateDTO);
-        return doctorMapper.ToDoctorDTO(doctorRepository.save(doctor));
+        Doctor doctor = doctorMapper.todoctor(doctorCreateDTO);
+        return doctorMapper.toDoctorDTO(doctorRepository.save(doctor));
     }
 
     public void deleteDoctor(String email) {
@@ -60,6 +60,6 @@ public class DoctorService {
                 .orElseThrow(() -> new ClinicDoesNotExistException("Clinic with given name does not exist.", HttpStatus.NOT_FOUND));
         doctor.getClinics().add(clinic);
         doctorRepository.save(doctor);
-        return doctorMapper.ToDoctorDTO(doctor);
+        return doctorMapper.toDoctorDTO(doctor);
     }
 }

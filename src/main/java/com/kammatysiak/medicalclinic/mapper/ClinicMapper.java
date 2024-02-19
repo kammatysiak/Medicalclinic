@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public interface ClinicMapper {
 
     @Mapping(target = "doctorIds", source ="doctors", qualifiedByName="mapDoctors")
-    ClinicDTO ToClinicDTO(Clinic entity);
+    ClinicDTO toClinicDTO(Clinic entity);
 
-    Clinic ToClinic(ClinicDTO entity);
+    Clinic toClinic(ClinicDTO entity);
 
     @Named("mapDoctors")
     default List<Long> mapDoctors(Set<Doctor> doctorsSet){

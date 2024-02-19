@@ -28,21 +28,21 @@ public class PatientService {
 
     public List<PatientDTO> getPatients() {
         return patientRepository.findAll().stream()
-                .map(patientMapper::PatientDTO)
+                .map(patientMapper::toPatientDTO)
                 .toList();
     }
 
     public PatientDTO getPatient(String email) {
         Patient patient = patientRepository.findByEmail(email)
                 .orElseThrow(() -> new PatientDoesNotExistException("Patient with given e-mail does not exist.", HttpStatus.NOT_FOUND));
-        return patientMapper.PatientDTO(patient);
+        return patientMapper.toPatientDTO(patient);
     }
     @Transactional
     public PatientDTO createPatient(PatientCreateDTO patientDTO) {
-        validateNullsPatient(patientMapper.DTOToPatient(patientDTO), "Data you shared contains empty fields");
+        validateNullsPatient(patientMapper.toPatient(patientDTO), "Data you shared contains empty fields");
         validateIfPatientAlreadyExists(patientRepository.existsByEmail(patientDTO.getEmail()), "Patient with given e-mail already exists.");
-        Patient patient = patientMapper.DTOToPatient(patientDTO);
-        return patientMapper.PatientDTO(patientRepository.save(patient));
+        Patient patient = patientMapper.toPatient(patientDTO);
+        return patientMapper.toPatientDTO(patientRepository.save(patient));
     }
 
     public void deletePatient(String email) {
@@ -57,7 +57,7 @@ public class PatientService {
                 .orElseThrow(() -> new PatientDoesNotExistException("The patient you are trying to change does not exist.", HttpStatus.NOT_FOUND));
         isEmailAvailable(patient.getEmail(), newPatientData.getEmail());
         setPatientData(patient, newPatientData);
-        return patientMapper.PatientDTO(patientRepository.save(patient));
+        return patientMapper.toPatientDTO(patientRepository.save(patient));
     }
     @Transactional
     public PatientDTO editPatientPassword(String email, PasswordDTO passwordsDTO) {
@@ -65,7 +65,7 @@ public class PatientService {
                 .orElseThrow(() -> new PatientDoesNotExistException("The patient whom you are trying to change the password does not exist.", HttpStatus.NOT_FOUND));
         validatePasswordChange(passwordsDTO, patient, "Incorrect password.");
         patient.setPassword(passwordsDTO.getNewPassword());
-        return patientMapper.PatientDTO(patientRepository.save(patient));
+        return patientMapper.toPatientDTO(patientRepository.save(patient));
     }
 
     private void isEmailAvailable(String currentEmail, String newEmail) {

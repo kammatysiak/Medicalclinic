@@ -24,22 +24,22 @@ public class ClinicService {
 
     public List<ClinicDTO> getClinics() {
         return clinicRepository.findAll().stream()
-                .map(clinicMapper::ToClinicDTO)
+                .map(clinicMapper::toClinicDTO)
                 .toList();
     }
 
     public ClinicDTO getClinic(long id) {
         Clinic clinic = clinicRepository.findById(id)
                 .orElseThrow(() -> new ClinicDoesNotExistException("Clinic with given name does not exist.", HttpStatus.NOT_FOUND));
-        return clinicMapper.ToClinicDTO(clinic);
+        return clinicMapper.toClinicDTO(clinic);
     }
 
     @Transactional
     public ClinicDTO createClinic(ClinicDTO clinicDTO) {
-        validateNullsClinic(clinicMapper.ToClinic(clinicDTO), "Data you shared contains empty fields");
+        validateNullsClinic(clinicMapper.toClinic(clinicDTO), "Data you shared contains empty fields");
         validateIfClinicAlreadyExists(clinicRepository.existsByName(clinicDTO.getName()), "Clinic with given name already exists.");
-        Clinic clinic = clinicMapper.ToClinic(clinicDTO);
-        return clinicMapper.ToClinicDTO(clinicRepository.save(clinic));
+        Clinic clinic = clinicMapper.toClinic(clinicDTO);
+        return clinicMapper.toClinicDTO(clinicRepository.save(clinic));
     }
 
     public void deleteClinic(String name) {

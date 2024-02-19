@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 public interface DoctorMapper {
 
 
-    Doctor ToDoctor(DoctorDTO entity);
+    Doctor todoctor(DoctorDTO entity);
 
     @Mapping(target = "clinicIds", source ="clinics", qualifiedByName="mapClinics")
-    DoctorDTO ToDoctorDTO(Doctor entity);
-    Doctor ToDoctor(DoctorCreateDTO entity);
+    DoctorDTO toDoctorDTO(Doctor entity);
+    Doctor todoctor(DoctorCreateDTO entity);
 
     @Named("mapClinics")
     default List<Long> mapClinics(Set<Clinic> clinicsSet){
