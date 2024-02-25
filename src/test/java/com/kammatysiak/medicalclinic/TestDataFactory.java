@@ -1,9 +1,6 @@
 package com.kammatysiak.medicalclinic;
 
-import com.kammatysiak.medicalclinic.model.dto.ClinicDTO;
-import com.kammatysiak.medicalclinic.model.dto.DoctorCreateDTO;
-import com.kammatysiak.medicalclinic.model.dto.PatientCreateDTO;
-import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
+import com.kammatysiak.medicalclinic.model.dto.*;
 import com.kammatysiak.medicalclinic.model.entity.Clinic;
 import com.kammatysiak.medicalclinic.model.entity.Doctor;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
@@ -71,6 +68,15 @@ public class TestDataFactory {
                 .build();
     }
 
+    public static DoctorDTO createDoctorDTO(String email) {
+        return DoctorDTO.builder()
+                .email(email)
+                .firstName("Tomasz")
+                .lastName("Kowalski")
+                .specialization("Oncology")
+                .build();
+    }
+
     public static Clinic createClinic(String name) {
         return Clinic.builder()
                 .buildingNumber("12")
@@ -93,4 +99,6 @@ public class TestDataFactory {
                 .doctorIds(new ArrayList<>())
                 .build();
     }
+
+
 }

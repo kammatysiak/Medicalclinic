@@ -18,12 +18,13 @@ public interface DoctorMapper {
 
     Doctor todoctor(DoctorDTO entity);
 
-    @Mapping(target = "clinicIds", source ="clinics", qualifiedByName="mapClinics")
+    @Mapping(target = "clinicIds", source = "clinics", qualifiedByName = "mapClinics")
     DoctorDTO toDoctorDTO(Doctor entity);
+
     Doctor todoctor(DoctorCreateDTO entity);
 
     @Named("mapClinics")
-    default List<Long> mapClinics(Set<Clinic> clinicsSet){
+    default List<Long> mapClinics(Set<Clinic> clinicsSet) {
         return clinicsSet.stream()
                 .map(Clinic::getId)
                 .collect(Collectors.toList());

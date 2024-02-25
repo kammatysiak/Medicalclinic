@@ -37,6 +37,7 @@ public class PatientService {
                 .orElseThrow(() -> new PatientDoesNotExistException("Patient with given e-mail does not exist.", HttpStatus.NOT_FOUND));
         return patientMapper.toPatientDTO(patient);
     }
+
     @Transactional
     public PatientDTO createPatient(PatientCreateDTO patientDTO) {
         validateNullsPatient(patientMapper.toPatient(patientDTO), "Data you shared contains empty fields");
@@ -50,6 +51,7 @@ public class PatientService {
                 .orElseThrow(() -> new PatientDoesNotExistException("The patient you are trying to delete does not exist", HttpStatus.NOT_FOUND));
         patientRepository.delete(patient);
     }
+
     @Transactional
     public PatientDTO editPatient(String email, PatientDTO newPatientData) {
         validateNullsPatientDTO(newPatientData, "Provided patient contains empty fields.");
@@ -59,6 +61,7 @@ public class PatientService {
         setPatientData(patient, newPatientData);
         return patientMapper.toPatientDTO(patientRepository.save(patient));
     }
+
     @Transactional
     public PatientDTO editPatientPassword(String email, PasswordDTO passwordsDTO) {
         Patient patient = patientRepository.findByEmail(email)
