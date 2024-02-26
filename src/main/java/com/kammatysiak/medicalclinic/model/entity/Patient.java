@@ -37,6 +37,9 @@ public class Patient {
     private LocalDate birthday;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
+    @OneToMany
+    @Column(name = "VISITS")
+    private Visit visits;
 
     public static void setPatientData(Patient patient, PatientDTO newPatientData) {
         patient.setFirstName(newPatientData.getFirstName());
