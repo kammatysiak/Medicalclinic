@@ -1,13 +1,15 @@
 package com.kammatysiak.medicalclinic.service;
 
-import com.kammatysiak.medicalclinic.exceptions.PatientDoesNotExistException;
-import com.kammatysiak.medicalclinic.exceptions.VisitDoesNotExistException;
-import com.kammatysiak.medicalclinic.exceptions.VisitTimingException;
+import com.kammatysiak.medicalclinic.exceptions.*;
 import com.kammatysiak.medicalclinic.mapper.VisitMapper;
 import com.kammatysiak.medicalclinic.model.dto.VisitAssignPatientDTO;
 import com.kammatysiak.medicalclinic.model.dto.VisitDTO;
+import com.kammatysiak.medicalclinic.model.entity.Clinic;
+import com.kammatysiak.medicalclinic.model.entity.Doctor;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
 import com.kammatysiak.medicalclinic.model.entity.Visit;
+import com.kammatysiak.medicalclinic.repository.ClinicRepository;
+import com.kammatysiak.medicalclinic.repository.DoctorRepository;
 import com.kammatysiak.medicalclinic.repository.PatientRepository;
 import com.kammatysiak.medicalclinic.repository.VisitRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.kammatysiak.medicalclinic.model.entity.Visit.setVisitData;
 import static com.kammatysiak.medicalclinic.validator.VisitValidator.validateNullsVisit;
 import static com.kammatysiak.medicalclinic.validator.VisitValidator.validateTimingVisit;
 
@@ -26,6 +29,8 @@ public class VisitService {
     private final VisitRepository visitRepository;
     private final VisitMapper visitMapper;
     private final PatientRepository patientRepository;
+    private final ClinicRepository clinicRepository;
+    private final DoctorRepository doctorRepository;
 
     public List<VisitDTO> getVisitsForPatient(String email) {
         return visitRepository.findAll().stream()
@@ -40,8 +45,13 @@ public class VisitService {
         if (!(visitRepository.findAllOverlapping(visitDTO.getDoctorId(), visitDTO.getVisitStart(), visitDTO.getVisitEnd()).isEmpty())) {
             throw new VisitTimingException("The visit you are trying to book is overlapping an existing visit", HttpStatus.BAD_REQUEST);
         }
-        Visit visit = visitMapper.toVisit(visitDTO);
-        return visitMapper.toVisitDTO(visitRepository.save(visit));
+        Visit visit = new Visit();
+        Clinic clinic = clinicRepository.findById(visitDTO.getClinicId())
+                .orElseThrow(() -> new ClinicDoesNotExistException("Clinic does not exist.", HttpStatus.NOT_FOUND));
+        Doctor doctor = doctorRepository.findById(visitDTO.getDoctorId())
+                .orElseThrow(() -> new DoctorDoesNotExistException("Doctor does not Exist.", HttpStatus.NOT_FOUND));
+        setVisitData(visit, clinic, doctor, visitDTO);
+        return visitMapper.toVisitDTO(visit);
     }
 
     public VisitDTO assignPatientToVisit(String email, VisitAssignPatientDTO assignDTO) {
@@ -53,4 +63,5 @@ public class VisitService {
         visitRepository.save(visit);
         return visitMapper.toVisitDTO(visit);
     }
+
 }

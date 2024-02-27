@@ -1,5 +1,6 @@
 package com.kammatysiak.medicalclinic.model.entity;
 
+import com.kammatysiak.medicalclinic.model.dto.VisitDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,4 +33,11 @@ public class Visit {
     @Column(name = "VISIT_END")
     private LocalDateTime visitEnd;
 
+
+    public static void setVisitData(Visit visit, Clinic clinic, Doctor doctor , VisitDTO visitDTO) {
+        visit.setClinic(clinic);
+        visit.setDoctor(doctor);
+        visit.setVisitStart(visitDTO.getVisitStart());
+        visit.setVisitEnd(visitDTO.getVisitEnd());
+    }
 }
