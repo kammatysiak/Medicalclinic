@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.kammatysiak.medicalclinic.model.entity.Visit.setVisitData;
-import static com.kammatysiak.medicalclinic.validator.VisitValidator.validateNullsVisit;
-import static com.kammatysiak.medicalclinic.validator.VisitValidator.validateTimingVisit;
+import static com.kammatysiak.medicalclinic.validator.VisitValidator.*;
 
 @RequiredArgsConstructor
 @Service
@@ -40,7 +39,7 @@ public class VisitService {
     }
 
     public VisitDTO createVisit(VisitDTO visitDTO) {
-        validateNullsVisit(visitMapper.toVisit(visitDTO), "The Visit data shared is incomplete.");
+        validateNullsVisitDTO(visitDTO, "The Visit data shared is incomplete.");
         validateTimingVisit(visitMapper.toVisit(visitDTO), "You are trying to book the visit with an incorrect time");
         if (!(visitRepository.findAllOverlapping(visitDTO.getDoctorId(), visitDTO.getVisitStart(), visitDTO.getVisitEnd()).isEmpty())) {
             throw new VisitTimingException("The visit you are trying to book is overlapping an existing visit", HttpStatus.BAD_REQUEST);
@@ -51,6 +50,7 @@ public class VisitService {
         Doctor doctor = doctorRepository.findById(visitDTO.getDoctorId())
                 .orElseThrow(() -> new DoctorDoesNotExistException("Doctor does not Exist.", HttpStatus.NOT_FOUND));
         setVisitData(visit, clinic, doctor, visitDTO);
+        visitRepository.save(visit);
         return visitMapper.toVisitDTO(visit);
     }
 

@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,6 +22,9 @@ public interface ClinicMapper {
 
     @Named("mapDoctors")
     default List<Long> mapDoctors(Set<Doctor> doctorsSet) {
+        if (doctorsSet == null) {
+            return new ArrayList<>();
+        }
         return doctorsSet.stream()
                 .map(Doctor::getId)
                 .collect(Collectors.toList());

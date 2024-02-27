@@ -25,6 +25,9 @@ public interface VisitMapper {
 
     @Named("mapPatient")
     default Long mapPatient(Patient patient) {
+        if(patient==null){
+            return 0L;
+        }
         return patient.getId();
     }
 
