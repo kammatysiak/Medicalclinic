@@ -28,7 +28,7 @@ public class DoctorController {
     }
 
     @PostMapping
-    public DoctorDTO postDoctor(@RequestBody DoctorCreateDTO doctorCreateDTO) {
+    public DoctorDTO createDoctor(@RequestBody DoctorCreateDTO doctorCreateDTO) {
         return doctorService.createDoctor(doctorCreateDTO);
     }
 

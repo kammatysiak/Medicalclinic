@@ -3,6 +3,7 @@ package com.kammatysiak.medicalclinic.model.entity;
 import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "PATIENTS")
 @Entity
+@Builder
 public class Patient {
 
     @Id

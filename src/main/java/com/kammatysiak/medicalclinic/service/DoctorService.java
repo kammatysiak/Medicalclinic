@@ -39,6 +39,7 @@ public class DoctorService {
                 .orElseThrow(() -> new DoctorDoesNotExistException("Doctor with given email does not exist.", HttpStatus.NOT_FOUND));
         return doctorMapper.toDoctorDTO(doctor);
     }
+
     @Transactional
     public DoctorDTO createDoctor(DoctorCreateDTO doctorCreateDTO) {
         validateNullsDoctor(doctorMapper.todoctor(doctorCreateDTO), "Data you shared contains empty fields");
@@ -52,6 +53,7 @@ public class DoctorService {
                 .orElseThrow(() -> new DoctorDoesNotExistException("The doctor you are trying to delete does not exist", HttpStatus.NOT_FOUND));
         doctorRepository.delete(doctor);
     }
+
     @Transactional
     public DoctorDTO employDoctorInClinic(String email, EmploymentDTO employmentDTO) {
         Doctor doctor = doctorRepository.findByEmail(email)
