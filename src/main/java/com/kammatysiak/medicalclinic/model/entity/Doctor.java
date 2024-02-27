@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -31,6 +32,9 @@ public class Doctor {
     private String password;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
+    @OneToMany
+    @JoinColumn(name = "VISITS")
+    private List<Visit> visits;
 
     @ManyToMany
     @JoinTable(

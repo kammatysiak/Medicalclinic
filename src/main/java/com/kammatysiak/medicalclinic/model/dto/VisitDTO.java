@@ -1,15 +1,18 @@
 package com.kammatysiak.medicalclinic.model.dto;
 
-import com.kammatysiak.medicalclinic.model.entity.Clinic;
-import com.kammatysiak.medicalclinic.model.entity.Doctor;
-import com.kammatysiak.medicalclinic.model.entity.Patient;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
+@Builder
 public class VisitDTO {
-    private Patient patient;
-    private Doctor doctor;
-    private Clinic clinic;
+    private long patientId;
+    private long doctorId;
+    private long clinicId;
     private LocalDateTime visitStart;
     private LocalDateTime visitEnd;
 }

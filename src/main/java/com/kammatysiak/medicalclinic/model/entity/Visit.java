@@ -3,6 +3,7 @@ package com.kammatysiak.medicalclinic.model.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -12,18 +13,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Data
 public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @Column(name = "PATIENT")
+    @JoinColumn(name = "PATIENT_ID")
     private Patient patient;
     @ManyToOne
-    @Column(name = "DOCTOR")
+    @JoinColumn(name = "DOCTOR_ID")
     private Doctor doctor;
     @ManyToOne
-    @Column(name = "CLINIC")
+    @JoinColumn(name = "CLINIC_ID")
     private Clinic clinic;
     @Column(name = "VISIT_START")
     private LocalDateTime visitStart;
