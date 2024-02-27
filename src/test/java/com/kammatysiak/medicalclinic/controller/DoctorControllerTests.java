@@ -42,7 +42,6 @@ public class DoctorControllerTests {
         DoctorDTO doctor = createDoctorDTO("test@test.pl");
         DoctorDTO doctor1 = createDoctorDTO("test1@test.pl");
 
-
         when(doctorService.getDoctors()).thenReturn(List.of(doctor, doctor1));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/doctors"))

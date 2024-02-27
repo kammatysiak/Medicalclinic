@@ -42,7 +42,6 @@ public class PatientControllerTests {
         PatientDTO patient = createPatientDTO("test@test.pl");
         PatientDTO patient1 = createPatientDTO("test1@test.pl");
 
-
         when(patientService.getPatients()).thenReturn(List.of(patient, patient1));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/patients"))
@@ -104,7 +103,6 @@ public class PatientControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.put("/patients/test@test.pl")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(patientDTO)))
-                .andDo(print())
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value(patientDTO.getEmail()))

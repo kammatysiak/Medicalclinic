@@ -4,12 +4,14 @@ import com.kammatysiak.medicalclinic.model.dto.*;
 import com.kammatysiak.medicalclinic.model.entity.Clinic;
 import com.kammatysiak.medicalclinic.model.entity.Doctor;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
-
-public class TestDataFactory {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class TestDataFactory {
 
     public static Patient createPatient(String email) {
         return Patient.builder()

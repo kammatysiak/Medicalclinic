@@ -85,7 +85,6 @@ public class DoctorServiceTests {
         assertEquals("Kowalski", result.getLastName());
         assertEquals("Oncology", result.getSpecialization());
         assertTrue(result.getClinicIds().isEmpty());
-
     }
 
     @Test
@@ -154,6 +153,7 @@ public class DoctorServiceTests {
 
         DoctorExistsException exception = assertThrows(DoctorExistsException.class,
                 () -> doctorService.createDoctor(doctorCreateDTO));
+
         assertEquals("Doctor with given email already exists.", exception.getMessage());
         assertEquals(HttpStatus.CONFLICT, exception.getStatus());
     }
@@ -209,6 +209,7 @@ public class DoctorServiceTests {
         Clinic clinic = createClinic("Medicover");
         EmploymentDTO employmentDTO = new EmploymentDTO(doctor.getEmail(), clinic.getName());
         when(doctorRepository.findByEmail(any())).thenReturn(Optional.empty());
+
         DoctorDoesNotExistException exception = assertThrows(DoctorDoesNotExistException.class,
                 () -> doctorService.employDoctorInClinic("test@test.pl", employmentDTO));
         //Then
@@ -223,6 +224,7 @@ public class DoctorServiceTests {
         EmploymentDTO employmentDTO = new EmploymentDTO(doctor.getEmail(), clinic.getName());
         when(clinicRepository.findByName(any())).thenReturn(Optional.empty());
         when(doctorRepository.findByEmail(any())).thenReturn(Optional.of(doctor));
+
         ClinicDoesNotExistException exception = assertThrows(ClinicDoesNotExistException.class,
                 () -> doctorService.employDoctorInClinic("test@test.pl", employmentDTO));
         //Then
