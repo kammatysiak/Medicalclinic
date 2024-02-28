@@ -38,8 +38,7 @@ public class Patient {
     private LocalDate birthday;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
-    @OneToMany
-    @JoinColumn(name = "VISITS")
+    @OneToMany(mappedBy = "patient")
     private List<Visit> visits;
 
     public static void setPatientData(Patient patient, PatientDTO newPatientData) {

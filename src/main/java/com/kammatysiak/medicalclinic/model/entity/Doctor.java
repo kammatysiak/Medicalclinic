@@ -32,8 +32,7 @@ public class Doctor {
     private String password;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
-    @OneToMany
-    @JoinColumn(name = "VISITS")
+    @OneToMany(mappedBy = "doctor")
     private List<Visit> visits;
 
     @ManyToMany
