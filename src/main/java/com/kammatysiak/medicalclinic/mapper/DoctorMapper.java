@@ -22,7 +22,6 @@ public interface DoctorMapper {
 
     @Mapping(target = "clinicIds", source = "clinics", qualifiedByName = "mapClinics")
     DoctorDTO toDoctorDTO(Doctor entity);
-
     Doctor todoctor(DoctorCreateDTO entity);
 
     @Named("mapClinics")

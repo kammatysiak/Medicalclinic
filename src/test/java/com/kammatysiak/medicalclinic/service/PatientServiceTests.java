@@ -69,7 +69,6 @@ public class PatientServiceTests {
         assertEquals("Kowalski", result.get(1).getLastName());
         assertEquals("606606606", result.get(1).getPhoneNumber());
         assertEquals(LocalDate.of(2022, 1, 1), result.get(1).getBirthday());
-
     }
 
     @Test
@@ -87,7 +86,6 @@ public class PatientServiceTests {
         assertEquals("Kowalski", result.getLastName());
         assertEquals("606606606", result.getPhoneNumber());
         assertEquals(LocalDate.of(2022, 1, 1), result.getBirthday());
-
     }
 
     @Test
@@ -104,7 +102,6 @@ public class PatientServiceTests {
 
     @Test
     void createPatient_DataCorrect_PatientDTOReturned() {
-
         PatientCreateDTO patientCreateDTO = createPatientCreateDTO("test@test.pl");
         Patient patient = createPatient("test@test.pl");
 
@@ -128,6 +125,7 @@ public class PatientServiceTests {
 
         PatientExistsException exception = assertThrows(PatientExistsException.class,
                 () -> patientService.createPatient(patientCreateDTO));
+
         assertEquals("Patient with given e-mail already exists.", exception.getMessage());
         assertEquals(HttpStatus.CONFLICT, exception.getStatus());
     }
@@ -143,7 +141,6 @@ public class PatientServiceTests {
         assertEquals(expectedMessage, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
-
     static Stream<Arguments> validateNullsPatientCreateDTOData() {
         return Stream.of(Arguments.of(PatientCreateDTO.builder()
                         .email("test@test.pl")

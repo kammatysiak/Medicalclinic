@@ -40,7 +40,6 @@ public class ClinicControllerTests {
         ClinicDTO clinicDTO = createClinicDTO("Medicover");
         ClinicDTO clinicDTO1 = createClinicDTO("Medicover1");
 
-
         when(clinicService.getClinics()).thenReturn(List.of(clinicDTO, clinicDTO1));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/clinics"))

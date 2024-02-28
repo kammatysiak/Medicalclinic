@@ -51,7 +51,6 @@ public class ClinicServiceTests {
         clinics.add(clinic);
         clinics.add(clinic1);
 
-
         when(clinicRepository.findAll()).thenReturn(clinics);
 
         List<ClinicDTO> result = clinicService.getClinics();
@@ -66,7 +65,6 @@ public class ClinicServiceTests {
         assertEquals(clinic1.getName(), result.get(1).getName());
         assertEquals(clinic1.getPostCode(), result.get(1).getPostCode());
         assertEquals(clinic1.getStreet(), result.get(1).getStreet());
-
     }
 
     @Test
@@ -81,7 +79,6 @@ public class ClinicServiceTests {
         assertEquals(clinic.getName(), result.getName());
         assertEquals(clinic.getPostCode(), result.getPostCode());
         assertEquals(clinic.getStreet(), result.getStreet());
-
     }
 
     @Test
@@ -160,6 +157,7 @@ public class ClinicServiceTests {
 
         ClinicExistsException exception = assertThrows(ClinicExistsException.class,
                 () -> clinicService.createClinic(clinicDTO));
+
         assertEquals("Clinic with given name already exists.", exception.getMessage());
         assertEquals(HttpStatus.CONFLICT, exception.getStatus());
     }
