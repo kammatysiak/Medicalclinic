@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -37,6 +38,8 @@ public class Patient {
     private LocalDate birthday;
     @Column(name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
+    @OneToMany(mappedBy = "patient")
+    private List<Visit> visits;
 
     public static void setPatientData(Patient patient, PatientDTO newPatientData) {
         patient.setFirstName(newPatientData.getFirstName());

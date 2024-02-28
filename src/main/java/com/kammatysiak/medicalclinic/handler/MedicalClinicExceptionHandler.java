@@ -61,4 +61,18 @@ public class MedicalClinicExceptionHandler extends ResponseEntityExceptionHandle
     public ResponseEntity<ExceptionMessageDTO> handleDoctorExistsException(DoctorExistsException ex) {
         return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
     }
+
+    @ExceptionHandler({VisitNullFieldException.class})
+    public ResponseEntity<ExceptionMessageDTO> handleVisitNullFieldException(VisitNullFieldException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
+    }
+
+    @ExceptionHandler({VisitTimingException.class})
+    public ResponseEntity<ExceptionMessageDTO> handleVisitTimingException(VisitTimingException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
+    }
+    @ExceptionHandler({VisitDoesNotExistException.class})
+    public ResponseEntity<ExceptionMessageDTO> handleVisitDoesNotExistException(VisitDoesNotExistException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(new ExceptionMessageDTO(ex.getMessage(), LocalDateTime.now(), ex.getStatus()));
+    }
 }

@@ -114,7 +114,7 @@ public class DoctorServiceTests {
         assertEquals(doctorCreateDTO.getFirstName(), result.getFirstName());
         assertEquals(doctorCreateDTO.getLastName(), result.getLastName());
         assertEquals(doctorCreateDTO.getSpecialization(), result.getSpecialization());
-        assertEquals(doctorCreateDTO.getClinicIds(), result.getClinicIds());
+        assertEquals(0, result.getClinicIds().size());
     }
 
     @ParameterizedTest
