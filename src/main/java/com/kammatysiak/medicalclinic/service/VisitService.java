@@ -36,6 +36,11 @@ public class VisitService {
                 .filter(v -> v.getPatient().getEmail().equals(email))
                 .map(visitMapper::toVisitDTO)
                 .toList();
+    }    public List<VisitDTO> getVisitsForPatient(Long id) {
+        return visitRepository.findAll().stream()
+                .filter(v -> v.getPatient().getId().equals(id))
+                .map(visitMapper::toVisitDTO)
+                .toList();
     }
 
     public VisitDTO createVisit(VisitDTO visitDTO) {

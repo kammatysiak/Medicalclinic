@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: kamil
+      changes:
+        - createTable:
+            tableName: patients
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_patient_id
+                  name: id
+                  type: int
+              - column:
+                  constraints:
+                    unique: true
+                    uniqueConstraintName: unique_patient_email
+                  name: email
+                  type: varchar(50)
+              - column:
+                  name: first_name
+                  type: varchar(50)
+              - column:
+                  name: last_name
+                  type: varchar(50)
+              - column:
+                  name: password
+                  type: varchar(50)
+              - column:
+                  name: id_card_no
+                  type: varchar(50)
+              - column:
+                  name: phone_number
+                  type: varchar(50)
+              - column:
+                  name: birthday
+                  type: date
+              - column:
+                  name: modify_date
+                  type: datetime

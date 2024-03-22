@@ -10,6 +10,7 @@ import com.kammatysiak.medicalclinic.model.dto.PatientCreateDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
 import com.kammatysiak.medicalclinic.repository.PatientRepository;
+import com.kammatysiak.medicalclinic.repository.VisitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,12 +38,14 @@ public class PatientServiceTests {
     PatientService patientService;
     PatientRepository patientRepository;
     PatientMapper patientMapper;
+    VisitRepository visitRepository;
 
     @BeforeEach
     void setup() {
         this.patientRepository = Mockito.mock(PatientRepository.class);
         this.patientMapper = Mappers.getMapper(PatientMapper.class);
-        this.patientService = new PatientService(patientRepository, patientMapper);
+        this.visitRepository = Mockito.mock(VisitRepository.class);
+        this.patientService = new PatientService(patientRepository, visitRepository, patientMapper);
     }
 
     @Test

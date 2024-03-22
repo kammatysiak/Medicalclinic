@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: kamil
+      changes:
+        - createTable:
+            tableName: clinics
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_clinic_id
+                  name: id
+                  type: int
+              - column:
+                  constraints:
+                    unique: true
+                    uniqueConstraintName: unique_clinic_name
+                  name: name
+                  type: varchar(50)
+              - column:
+                  name: city
+                  type: varchar(50)
+              - column:
+                  name: post_code
+                  type: varchar(50)
+              - column:
+                  name: street
+                  type: varchar(50)
+              - column:
+                  name: building_number
+                  type: varchar(50)
+        - createTable:
+            tableName: doctor_clinic
+            columns:
+              - column:
+                  name: doctor_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_doctor_id
+                    reference: doctor(id)
+                    unique: false
+              - column:
+                  name: clinic_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_clinic_id
+                    reference: clinic(id)
+                    unique: false
+        - addPrimaryKey:
+            tableName: doctor_clinic
+            columnNames: doctor_id, clinic_id

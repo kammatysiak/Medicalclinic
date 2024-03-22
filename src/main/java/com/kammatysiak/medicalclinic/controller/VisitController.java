@@ -19,7 +19,10 @@ public class VisitController {
     public List<VisitDTO> getVisitsForPatient(@PathVariable("email") String email) {
         return visitService.getVisitsForPatient(email);
     }
-
+    @GetMapping("/{id}")
+    public List<VisitDTO> getVisitsForPatient(@PathVariable("id") long id) {
+        return visitService.getVisitsForPatient(id);
+    }
     @PostMapping
     public VisitDTO postVisit(@RequestBody VisitDTO visitDTO) {
         return visitService.createVisit(visitDTO);

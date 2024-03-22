@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: kamil
+      changes:
+        - createTable:
+            tableName: visits
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_visit_id
+              - column:
+                  name: patient_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_patient_id
+                    nullable: true
+                    references: patients(id)
+                    uniqueConstraintName: patient_id
+              - column:
+                  name: doctor_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_doctor_id
+                    nullable: false
+                    references: doctors(id)
+                    uniqueConstraintName: doctor_id
+              - column:
+                  name: clinic_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_clinic_id
+                    nullable: false
+                    references: clinics(id)
+                    uniqueConstraintName: clinic_id
+              - column:
+                  name: visit_start
+                  type: datetime
+              - column:
+                  name: visit_end
+                  type: datetime

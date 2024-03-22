@@ -7,12 +7,15 @@ import com.kammatysiak.medicalclinic.model.dto.PasswordDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientCreateDTO;
 import com.kammatysiak.medicalclinic.model.dto.PatientDTO;
 import com.kammatysiak.medicalclinic.model.entity.Patient;
+import com.kammatysiak.medicalclinic.model.entity.Visit;
 import com.kammatysiak.medicalclinic.repository.PatientRepository;
+import com.kammatysiak.medicalclinic.repository.VisitRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.kammatysiak.medicalclinic.model.entity.Patient.setPatientData;
@@ -23,6 +26,8 @@ import static com.kammatysiak.medicalclinic.validator.PatientValidator.*;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+
+    private final VisitRepository visitRepository;
 
     private final PatientMapper patientMapper;
 
@@ -35,6 +40,11 @@ public class PatientService {
     public PatientDTO getPatient(String email) {
         Patient patient = patientRepository.findByEmail(email)
                 .orElseThrow(() -> new PatientDoesNotExistException("Patient with given e-mail does not exist.", HttpStatus.NOT_FOUND));
+        return patientMapper.toPatientDTO(patient);
+
+    }    public PatientDTO getPatient(long id) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new PatientDoesNotExistException("Patient with given id does not exist.", HttpStatus.NOT_FOUND));
         return patientMapper.toPatientDTO(patient);
     }
 
@@ -77,5 +87,13 @@ public class PatientService {
                 throw new PatientExistsException("Email already exists for " + newEmail, HttpStatus.CONFLICT);
             }
         }
+    }
+
+    public List<PatientDTO> getPatientsWithVisitAtDate(LocalDate date) {
+        List<Visit> visitAtDateList = visitRepository.findVisitForGivenDate(date);
+       return visitAtDateList.stream()
+                .map(Visit::getPatient)
+                .map(patientMapper::toPatientDTO)
+                .toList();
     }
 }
